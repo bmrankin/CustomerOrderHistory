@@ -1,0 +1,8 @@
+#Ignore all xlsx files
+*.xlsx
+*.txt
+
+#Ignore all csv files
+*.csv
+!customers.csv
+!orderHistory.csv
