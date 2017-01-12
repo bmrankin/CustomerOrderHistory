@@ -1,9 +1,9 @@
-Ship_To,Bill_To,Name,Date_Interaction
+Ship To,Bill To,Company Name,Date Interaction
 2,2,Reynolds Inc,1161219
-4,4,Grimes, Schinner and Bashirian,1161227
-9,9,Auer, Rutherford and Ebert,1160808
+4,4,Schinner and Bashirian,1161227
+9,9,Rutherford and Ebert,1160808
 21,21,Ernser LLC,1161227
-26,26,Klein, Bins and Ankunding,1160711
+26,26,Bins and Ankunding,1160711
 664,20984,Boyle-Gaylord,1140605
 1311,9745,Jones Inc,1141121
 1934,21367,Koelpin Inc,1160822
