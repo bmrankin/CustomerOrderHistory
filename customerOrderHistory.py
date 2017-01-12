@@ -10,8 +10,18 @@ no = set(['no','n'])
 
 openfile = 'customerOrderHistory.csv'
 
-customerFile = 'customers.csv'
-orderHistoryFile = 'orderHistory.csv'
+customerFile = 'customers_real.csv'
+orderHistoryFile = 'orderHistory_real.csv'
+
+
+# column headers
+shipTo = 'Customer'
+billTo = 'Bill-to'
+orderDate = 'Order Date'
+customerNumberCustomersFile = ''
+customerNumberOrdersFile = 'Ship-to'
+customerName = 'CustomerName'
+
 
 ## DEFS
 def filterDate():
@@ -32,9 +42,9 @@ def filterDate():
         as400Date = input('What is the date in the AS400 date format?:  ')
         date = int(as400Date)
         filteredByDate = joined \
-            .select(['Ship To','Company Name','Order Date']) \
-            .where(lambda row: row['Order Date'] > date) \
-            .order_by('Ship To')
+            .select([shipTo,billTo,customerName,orderDate]) \
+            .where(lambda row: row[orderDate] > date) \
+            .order_by(shipTo)
 
         print(seperator + 'Last Order per Ship To after '+ str(date) + seperator)
         filteredByDate.print_table()
@@ -54,17 +64,17 @@ customers = agate.Table.from_csv(customerFile)
 orders = agate.Table.from_csv(orderHistoryFile)
 
 
-# Join the two tables together by Ship To Customer Number
+# Join the two tables together by Ship To Customer Number - .join(orders table name from agate, customer id in customers table from agate, customer id in orders table from agate, inner=True)
 # Select only Ship To and Order Date Columns
 # Order by Order Date from most recent. Script pulls first distinct it gets to for ship number so this gets the latest date per distinct Ship To
 # Get distinct Ship To
 # Sort Table by lowest Ship To
 joined = customers \
-    .join(orders, 'Ship To', 'Customer No', inner=True) \
-    .select(['Ship To','Company Name','Order Date']) \
-    .order_by('Order Date', reverse=True) \
-    .distinct('Ship To') \
-    .order_by('Ship To')
+    .join(orders, shipTo, customerNumberOrdersFile, inner=True) \
+    .select([shipTo,billTo,customerName,orderDate]) \
+    .order_by(orderDate, reverse=True) \
+    .distinct(shipTo) \
+    .order_by(shipTo)
 
 
 # Print Table
